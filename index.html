@@ -55,14 +55,14 @@
       body::before {
         content: "";
         position: fixed;
-        top: 10%;
-        left: -15%;
-        width: 512px;
-        height: 512px;
-        background-image: url("cropped-hifi.png");
+        top: -10%;
+        left: -40%;
+        width: 912px;
+        height: 912px;
+        background-image: url("logo-unpad.png");
         background-size: contain;
         background-repeat: no-repeat;
-        opacity: 0.5;
+        opacity: 0.1;
         transform: rotate(-15deg);
         z-index: 0;
         filter: drop-shadow(40px 40px 40px rgba(50, 50, 50, 0.668));
@@ -70,8 +70,32 @@
       }
 
       [data-theme="dark"] body::before {
-        opacity: 0.5;
+        opacity: 0.1;
         filter: drop-shadow(20px 20px 40px rgba(50, 50, 50, 0.668));
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        top: auto;
+        bottom: -10%;
+        right: -20%;
+        left: auto;
+        width: 600px;
+        height: 600px;
+        background-image: url("cropped-hifi.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        opacity: 0.1;
+        transform: rotate(15deg);
+        z-index: 0;
+        filter: drop-shadow(-20px 20px 40px rgba(50, 50, 50, 0.668));
+        pointer-events: none;
+      }
+
+      [data-theme="dark"] body::after {
+        opacity: 0.1;
+        filter: drop-shadow(-20px 20px 40px rgba(50, 50, 50, 0.668));
       }
 
       .container {
@@ -878,7 +902,7 @@
                   </div>
                 </div>
                 <div class="card-content">
-                  <h3 class="card-name">Ahmad Fauzi</h3>
+                  <h3 class="card-name">M. Naufaldi Dzakwan</h3>
                   <div class="card-info">
                     <div class="info-tag">Visi</div>
                     <div class="info-content">
@@ -1062,7 +1086,7 @@
       const selectedName = document.getElementById("selectedName");
 
       const candidates = {
-        1: "Ahmad Fauzi",
+        1: "M. Naufaldi Dzakwan",
         2: "Siti Nurhaliza",
         3: "Budi Santoso",
       };
