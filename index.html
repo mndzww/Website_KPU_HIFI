@@ -1,5 +1,6 @@
 <!-- Developed by @mndzww -->
-<!-- Last Updated 04/10/2025 - 22:31 -->
+<!-- Last Updated 24/10/2025 - 22:17 -->
+<!-- v2UPDATE-Integrated with Firebase Authentication -->
 
 <!DOCTYPE html>
 <html lang="id">
@@ -102,8 +103,8 @@
         max-width: 1220px;
         margin: 0 auto;
         padding: 80px 32px;
-        position: relative; /* TAMBAHKAN INI */
-        z-index: 1; /* TAMBAHKAN INI */
+        position: relative;
+        z-index: 1;
       }
 
       /* Theme Toggle */
@@ -141,7 +142,7 @@
         stroke-linejoin: round;
       }
 
-      /* Register Page */
+      /* Register/Login Page */
       .register-page {
         display: flex;
         flex-direction: column;
@@ -149,8 +150,13 @@
         justify-content: center;
         min-height: 100vh;
         padding: 40px 24px;
-        position: relative; /* TAMBAHKAN INI */
-        z-index: 1; /* TAMBAHKAN INI */
+        position: relative;
+        z-index: 1;
+        width: 100%;
+      }
+
+      .register-page:not(.hidden) {
+        display: flex;
       }
 
       .register-logo {
@@ -185,23 +191,6 @@
       .register-header {
         text-align: center;
         margin-bottom: 36px;
-      }
-
-      .register-badge {
-        display: inline-block;
-        background: linear-gradient(
-          135deg,
-          var(--gradient-start),
-          var(--gradient-end)
-        );
-        color: white;
-        padding: 8px 24px;
-        border-radius: 50px;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        margin-bottom: 20px;
-        box-shadow: var(--shadow-xl);
       }
 
       .register-header h2 {
@@ -279,6 +268,25 @@
 
       .register-btn:active {
         transform: translateY(-2px) scale(1.01);
+      }
+
+      .toggle-link {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+
+      .toggle-link a {
+        color: var(--gradient-start);
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .toggle-link a:hover {
+        color: var(--gradient-end);
+        text-decoration: underline;
       }
 
       /* Hero Section */
@@ -637,7 +645,7 @@
 
       .footer {
         text-align: center;
-        padding: 40px 20px;
+        padding: 25px 20px;
         font-size: 14px;
         color: var(--text-muted);
         border-top: 1px solid var(--border);
@@ -646,6 +654,201 @@
 
       .footer p {
         margin-bottom: 8px;
+      }
+
+      /* Homepage */
+      .homepage {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 40px 24px;
+        position: relative;
+        z-index: 1;
+        text-align: center;
+      }
+
+      .homepage::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("DSC_0209.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: blur(5px);
+        z-index: -1;
+      }
+
+      .homepage::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: -1;
+      }
+
+      [data-theme="dark"] .homepage::after {
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      .homepage.hidden {
+        display: none !important;
+      }
+
+      .homepage-logo {
+        width: 85px;
+        height: 85px;
+        margin-bottom: 20px;
+        background: var(--bg-card);
+        padding: 16px;
+        border-radius: 18px;
+        border: 2px solid var(--border);
+        box-shadow: var(--shadow-lg);
+        animation: fadeIn 0.8s ease;
+      }
+
+      .homepage-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .countdown-container {
+        margin-bottom: 56px;
+        animation: fadeInUp 1.2s ease;
+      }
+
+      .countdown-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--bg-primary);
+        margin-bottom: 24px;
+        letter-spacing: 0.5px;
+      }
+
+      .countdown {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .countdown-item {
+        background: var(--bg-card);
+        border: 2px solid var(--border);
+        border-radius: 20px;
+        padding: 20px 20px;
+        min-width: 90px;
+        box-shadow: var(--shadow-md);
+        transition: all 0.3s ease;
+      }
+
+      .countdown-item:hover {
+        transform: translateY(-8px);
+        border-color: var(--gradient-start);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .countdown-value {
+        font-size: 25px;
+        font-weight: 800;
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        margin-bottom: 8px;
+      }
+
+      .countdown-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .homepage-message {
+        max-width: 900px;
+        margin: 0 auto 48px;
+        animation: fadeInUp 1.4s ease;
+      }
+
+      .homepage-message h2 {
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: -1px;
+        margin-top: -20px;
+        margin-bottom: 20px;
+        line-height: 0.1;
+        color: var(--gradient-end);
+      }
+
+      .homepage-message p {
+        font-size: 15px;
+        color: var(--bg-card);
+        line-height: 1.7;
+      }
+
+      [data-theme="dark"] .homepage-message h2 {
+        color: #f9fafb;
+      }
+
+      [data-theme="dark"] .homepage-message p {
+        color: #d1d5db;
+      }
+
+      [data-theme="dark"] .countdown-title {
+        color: #f9fafb;
+      }
+
+      .homepage-btn {
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        color: white;
+        border: none;
+        padding: 20px 56px;
+        border-radius: 16px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: var(--shadow-xl);
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        letter-spacing: 0.3px;
+        animation: fadeInUp 1.6s ease;
+        margin-top: -20px;
+      }
+
+      .homepage-btn:hover {
+        transform: translateY(-4px) scale(1.05);
+        box-shadow: 0 25px 50px rgba(220, 83, 86, 0.3);
+      }
+
+      .homepage-btn:active {
+        transform: translateY(-2px) scale(1.02);
+      }
+
+      .homepage-btn svg {
+        width: 22px;
+        height: 22px;
       }
 
       /* Animations */
@@ -773,6 +976,39 @@
           font-size: 20px;
           padding: 20px 28px;
         }
+
+        .homepage-logo {
+          width: 96px;
+          height: 96px;
+          margin-bottom: 36px;
+        }
+
+        .countdown {
+          gap: 12px;
+        }
+
+        .countdown-item {
+          min-width: 80px;
+          padding: 20px 16px;
+        }
+
+        .countdown-value {
+          font-size: 36px;
+        }
+
+        .homepage-message h2 {
+          font-size: 24px;
+        }
+
+        .homepage-message p {
+          font-size: 15px;
+        }
+
+        .homepage-btn {
+          width: 100%;
+          padding: 18px 40px;
+          justify-content: center;
+        }
       }
 
       @media (min-width: 769px) and (max-width: 1024px) {
@@ -810,61 +1046,159 @@
       </svg>
     </div>
 
-    <!-- Register Page -->
-    <div id="registerPage" class="register-page">
-      <div class="register-logo">
-        <img src="cropped-hifi.png" alt="Logo Himpunan Fisika" />
+    <!-- Homepage -->
+    <div id="homepage" class="homepage">
+      <div class="homepage-logo">
+        <img src="cropped-hifi.png" alt="Logo HIFI" />
       </div>
-      <div class="register-box">
-        <div class="register-header">
-          <div class="register-badge">KPU HIFI 2025</div>
-          <h2>Daftar untuk Memilih</h2>
-          <p>
-            Silakan isi data diri Anda untuk melanjutkan ke proses pemilihan
-          </p>
+
+      <div class="countdown-container">
+        <h3 class="countdown-title">Pemilihan Dimulai Dalam</h3>
+        <div class="countdown">
+          <div class="countdown-item">
+            <div class="countdown-value" id="days">00</div>
+            <div class="countdown-label">Hari</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-value" id="hours">00</div>
+            <div class="countdown-label">Jam</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-value" id="minutes">00</div>
+            <div class="countdown-label">Menit</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-value" id="seconds">00</div>
+            <div class="countdown-label">Detik</div>
+          </div>
         </div>
-        <form id="registerForm">
-          <div class="form-group">
-            <label class="form-label">Nama Lengkap</label>
-            <input
-              type="text"
-              class="form-input"
-              id="fullName"
-              placeholder="Masukkan nama lengkap"
-              required
-            />
+      </div>
+
+      <div class="homepage-message">
+        <h2>Suara Anda, Masa Depan Kita</h2>
+        <p>
+          Partisipasi Anda sangat berarti dalam menentukan pemimpin yang akan
+          membawa himpunan kita menuju masa depan yang lebih baik. Mari
+          bersama-sama memilih sosok yang tepat untuk memimpin dan mengembangkan
+          organisasi kita.
+        </p>
+      </div>
+
+      <button class="homepage-btn" id="startVotingBtn">
+        📥 Mari Memilih 📥
+      </button>
+    </div>
+
+    <!-- Register Page -->
+    <div id="registerPage" class="hidden">
+      <div class="register-page">
+        <div class="register-logo">
+          <img src="cropped-hifi.png" alt="Logo" />
+        </div>
+        <div class="register-box">
+          <div class="register-header">
+            <h2>Daftar untuk Memilih</h2>
+            <p>
+              Silakan isi data diri Anda untuk melanjutkan ke proses pemilihan
+            </p>
           </div>
-          <div class="form-group">
-            <label class="form-label">NIM</label>
-            <input
-              type="text"
-              class="form-input"
-              id="nim"
-              placeholder="Masukkan NIM"
-              required
-            />
+          <form id="registerForm">
+            <div class="form-group">
+              <label class="form-label">Nama Lengkap</label>
+              <input
+                type="text"
+                class="form-input"
+                id="fullName"
+                placeholder="Masukkan nama lengkap"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">NIM</label>
+              <input
+                type="text"
+                class="form-input"
+                id="nim"
+                placeholder="Masukkan NIM"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Angkatan</label>
+              <select class="form-select" id="angkatan" required>
+                <option value="">Pilih Angkatan</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-input"
+                id="email"
+                placeholder="nama@mail.unpad.ac.id"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-input"
+                id="password"
+                placeholder="Minimal 6 karakter"
+                required
+              />
+            </div>
+            <button type="submit" class="register-btn">Daftar Akun</button>
+          </form>
+          <div class="toggle-link">
+            Sudah punya akun? <a href="#" id="toLoginLink">Login di sini</a>
           </div>
-          <div class="form-group">
-            <label class="form-label">Angkatan</label>
-            <select class="form-select" id="angkatan" required>
-              <option value="">Pilih Angkatan</option>
-              <option value="2022">2022</option>
-              <option value="2023">2023</option>
-              <option value="2024">2024</option>
-            </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="hidden">
+      <div class="register-page">
+        <div class="register-logo">
+          <img src="cropped-hifi.png" alt="Logo" />
+        </div>
+        <div class="register-box">
+          <div class="register-header">
+            <h2>Login Pemilih</h2>
+            <p>Masuk dengan akun yang sudah terdaftar</p>
           </div>
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input
-              type="email"
-              class="form-input"
-              id="email"
-              placeholder="nama@email.com"
-              required
-            />
+          <form id="loginForm">
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-input"
+                id="loginEmail"
+                placeholder="nama@mail.unpad.ac.id"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-input"
+                id="loginPassword"
+                placeholder="Masukkan password"
+                required
+              />
+            </div>
+            <button type="submit" class="register-btn">Masuk</button>
+          </form>
+          <div class="toggle-link">
+            Belum punya akun? <a href="#" id="toRegisterLink">Daftar di sini</a>
           </div>
-          <button type="submit" class="register-btn">Mulai Memilih</button>
-        </form>
+        </div>
       </div>
     </div>
 
@@ -875,9 +1209,9 @@
           <!-- Hero -->
           <div class="hero">
             <div class="hero-logo">
-              <img src="cropped-hifi.png" alt="Logo Himpunan Fisika" />
+              <img src="cropped-hifi.png" alt="Logo" />
             </div>
-            <div class="hero-badge">KPU HIFI 2025</div>
+            <div class="hero-badge">KPU 2025</div>
             <h1 class="hero-title">Pemilihan Ketua Himpunan</h1>
             <p class="hero-subtitle">
               Pilih kandidat yang menurut Anda paling tepat untuk memimpin
@@ -1019,8 +1353,106 @@
       </div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+      import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        sendEmailVerification,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        setDoc,
+        getDoc,
+        updateDoc,
+        serverTimestamp,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBw3QxWG-gSKSwN_Q2-lVtIYbm9WP0dgH8",
+        authDomain: "webkpuhifi.firebaseapp.com",
+        projectId: "webkpuhifi",
+        storageBucket: "webkpuhifi.firebasestorage.app",
+        messagingSenderId: "937411157669",
+        appId: "1:937411157669:web:5ff5cbbe0ac8a54685374c",
+        measurementId: "G-EVEH3BH02W",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      // Store globally for vanilla JS access
+      window.firebaseAuth = auth;
+      window.firebaseDb = db;
+      window.firebaseModules = {
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        sendEmailVerification,
+        doc,
+        setDoc,
+        getDoc,
+        updateDoc,
+        serverTimestamp,
+      };
+    </script>
+
     <script>
-      // Theme
+      // Countdown Timer
+      const countdownDate = new Date("2025-11-01T00:00:00").getTime();
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = countdownDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").textContent = String(days).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("hours").textContent = String(hours).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("minutes").textContent = String(
+          minutes
+        ).padStart(2, "0");
+        document.getElementById("seconds").textContent = String(
+          seconds
+        ).padStart(2, "0");
+
+        if (distance < 0) {
+          clearInterval(countdownInterval);
+          document.getElementById("days").textContent = "00";
+          document.getElementById("hours").textContent = "00";
+          document.getElementById("minutes").textContent = "00";
+          document.getElementById("seconds").textContent = "00";
+        }
+      }
+
+      const countdownInterval = setInterval(updateCountdown, 1000);
+      updateCountdown();
+
+      // Elements
+      const homepage = document.getElementById("homepage");
+      const registerPage = document.getElementById("registerPage");
+      const loginPage = document.getElementById("loginPage");
+      const votingPage = document.getElementById("votingPage");
+      const startVotingBtn = document.getElementById("startVotingBtn");
+      const toLoginLink = document.getElementById("toLoginLink");
+      const toRegisterLink = document.getElementById("toRegisterLink");
+
+      // Theme Toggle
       const themeToggle = document.getElementById("themeToggle");
       const lightIcon = document.getElementById("lightIcon");
       const darkIcon = document.getElementById("darkIcon");
@@ -1048,36 +1480,161 @@
         }
       }
 
-      // Registration
-      const registerForm = document.getElementById("registerForm");
-      const registerPage = document.getElementById("registerPage");
-      const votingPage = document.getElementById("votingPage");
-
-      registerForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const fullName = document.getElementById("fullName").value;
-        const nim = document.getElementById("nim").value;
-        const angkatan = document.getElementById("angkatan").value;
-        const email = document.getElementById("email").value;
-
-        // Validasi domain email
-        const allowedDomain = "@mail.unpad.ac.id";
-        if (!email.endsWith(allowedDomain)) {
-          alert(`Email harus menggunakan domain ${allowedDomain}`);
-          return; // Stop form submission
-        }
-
-        // Store user data
-        const userData = { fullName, nim, angkatan, email };
-        sessionStorage.setItem("voter", JSON.stringify(userData));
-
-        // Navigate to voting page
-        registerPage.classList.add("hidden");
-        votingPage.classList.remove("hidden");
+      // Navigation
+      startVotingBtn.addEventListener("click", () => {
+        homepage.classList.add("hidden");
+        registerPage.classList.remove("hidden");
         window.scrollTo(0, 0);
       });
 
-      // Voting
+      toLoginLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        registerPage.classList.add("hidden");
+        loginPage.classList.remove("hidden");
+        window.scrollTo(0, 0);
+      });
+
+      toRegisterLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        loginPage.classList.add("hidden");
+        registerPage.classList.remove("hidden");
+        window.scrollTo(0, 0);
+      });
+
+      // Register Form
+      const registerForm = document.getElementById("registerForm");
+      registerForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const fullName = document.getElementById("fullName").value.trim();
+        // const username = document.getElementById("username").value.trim();
+        const nim = document.getElementById("nim").value.trim();
+        const angkatan = document.getElementById("angkatan").value;
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        // Validasi email domain
+        if (
+          !email.endsWith("@mail.unpad.ac.id") &&
+          !email.endsWith("@unpad.ac.id")
+        ) {
+          alert(
+            "Email harus menggunakan domain @mail.unpad.ac.id atau @unpad.ac.id"
+          );
+          return;
+        }
+
+        if (password.length < 6) {
+          alert("Password minimal 6 karakter");
+          return;
+        }
+
+        try {
+          const {
+            createUserWithEmailAndPassword,
+            sendEmailVerification,
+            doc,
+            setDoc,
+            serverTimestamp,
+          } = window.firebaseModules;
+
+          const userCredential = await createUserWithEmailAndPassword(
+            window.firebaseAuth,
+            email,
+            password
+          );
+          const user = userCredential.user;
+
+          // Simpan data user ke Firestore
+          await setDoc(doc(window.firebaseDb, "users", user.uid), {
+            fullName,
+            nim,
+            angkatan,
+            email,
+            createdAt: serverTimestamp(),
+            hasVoted: false,
+            votedFor: null,
+          });
+
+          // Kirim email verifikasi
+          await sendEmailVerification(user);
+
+          alert(
+            "Registrasi berhasil! Silakan cek email Anda untuk verifikasi akun sebelum login."
+          );
+
+          // Reset form & redirect ke login
+          registerForm.reset();
+          registerPage.classList.add("hidden");
+          loginPage.classList.remove("hidden");
+        } catch (error) {
+          console.error(error);
+          if (error.code === "auth/email-already-in-use") {
+            alert("Email sudah terdaftar. Silakan login.");
+          } else {
+            alert("Gagal registrasi: " + error.message);
+          }
+        }
+      });
+
+      // Login Form
+      const loginForm = document.getElementById("loginForm");
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value;
+
+        try {
+          const { signInWithEmailAndPassword, doc, getDoc } =
+            window.firebaseModules;
+
+          const userCredential = await signInWithEmailAndPassword(
+            window.firebaseAuth,
+            email,
+            password
+          );
+          const user = userCredential.user;
+
+          if (!user.emailVerified) {
+            alert("Harap verifikasi email terlebih dahulu sebelum login.");
+            await window.firebaseAuth.signOut();
+            return;
+          }
+
+          // Cek apakah user sudah vote
+          const userDoc = await getDoc(
+            doc(window.firebaseDb, "users", user.uid)
+          );
+          if (userDoc.exists() && userDoc.data().hasVoted) {
+            alert("Anda sudah melakukan voting sebelumnya.");
+            await window.firebaseAuth.signOut();
+            return;
+          }
+
+          // Simpan session
+          sessionStorage.setItem("userId", user.uid);
+          sessionStorage.setItem("userEmail", user.email);
+
+          // Navigate ke voting page
+          loginForm.reset();
+          loginPage.classList.add("hidden");
+          votingPage.classList.remove("hidden");
+          window.scrollTo(0, 0);
+        } catch (error) {
+          console.error(error);
+          if (
+            error.code === "auth/wrong-password" ||
+            error.code === "auth/user-not-found"
+          ) {
+            alert("Email atau password salah.");
+          } else {
+            alert("Login gagal: " + error.message);
+          }
+        }
+      });
+
+      // Voting Logic
       let selectedId = null;
       const cards = document.querySelectorAll(".card");
       const voteBtn = document.getElementById("voteBtn");
@@ -1098,20 +1655,41 @@
           selectedId = this.getAttribute("data-id");
           voteBtn.disabled = false;
           voteBtn.innerHTML = `
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    Submit Vote
-                `;
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Submit Vote
+          `;
         });
       });
 
-      voteBtn.addEventListener("click", function () {
-        if (selectedId) {
+      voteBtn.addEventListener("click", async function () {
+        if (!selectedId) return;
+
+        const userId = sessionStorage.getItem("userId");
+        if (!userId) {
+          alert("Session tidak valid. Silakan login kembali.");
+          return;
+        }
+
+        try {
+          const { doc, updateDoc, serverTimestamp } = window.firebaseModules;
+
+          // Update Firestore
+          await updateDoc(doc(window.firebaseDb, "users", userId), {
+            hasVoted: true,
+            votedFor: selectedId,
+            votedAt: serverTimestamp(),
+          });
+
+          // Tampilkan success screen
           votingScreen.style.display = "none";
           successScreen.style.display = "block";
           selectedName.textContent = candidates[selectedId];
           window.scrollTo(0, 0);
+        } catch (error) {
+          console.error(error);
+          alert("Gagal menyimpan vote: " + error.message);
         }
       });
     </script>
