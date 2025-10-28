@@ -53,14 +53,19 @@
         min-height: 100vh;
         transition: background 0.3s ease, color 0.3s ease;
       }
-      body::before {
+
+      /* HAPUS/COMMENT body::before dan body::after yang lama */
+      /* Ganti dengan ini: */
+
+      /* Background untuk Register/Login Page */
+      .register-page::before {
         content: "";
         position: fixed;
         top: -10%;
         left: -40%;
         width: 912px;
         height: 912px;
-        background-image: url("./logo-unpad.png");
+        background-image: url("logo-unpad.png");
         background-size: contain;
         background-repeat: no-repeat;
         opacity: 0.1;
@@ -70,12 +75,12 @@
         pointer-events: none;
       }
 
-      [data-theme="dark"] body::before {
+      [data-theme="dark"] .register-page::before {
         opacity: 0.1;
         filter: drop-shadow(20px 20px 40px rgba(50, 50, 50, 0.668));
       }
 
-      body::after {
+      .register-page::after {
         content: "";
         position: fixed;
         top: auto;
@@ -94,7 +99,7 @@
         pointer-events: none;
       }
 
-      [data-theme="dark"] body::after {
+      [data-theme="dark"] .register-page::after {
         opacity: 0.1;
         filter: drop-shadow(-20px 20px 40px rgba(50, 50, 50, 0.668));
       }
@@ -107,7 +112,7 @@
         z-index: 1;
       }
 
-      /* Theme Toggle */
+      /* Theme Toggle - pastikan z-index lebih tinggi */
       .theme-toggle {
         position: fixed;
         top: 40px;
@@ -122,10 +127,33 @@
         justify-content: center;
         cursor: pointer;
         transition: all 0.3s ease;
-        z-index: 1000;
+        z-index: 1200;
         box-shadow: var(--shadow-md);
       }
 
+      /* Menu Toggle */
+      .menu-toggle {
+        position: fixed;
+        top: 40px;
+        left: 40px;
+        width: 56px;
+        height: 56px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        z-index: 1200; /* Naikkan juga */
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
       .theme-toggle:hover {
         transform: translateY(-4px) rotate(10deg);
         border-color: var(--gradient-start);
@@ -143,6 +171,7 @@
       }
 
       /* Register/Login Page */
+      /* Register/Login Page */
       .register-page {
         display: flex;
         flex-direction: column;
@@ -150,7 +179,7 @@
         justify-content: center;
         min-height: 100vh;
         padding: 40px 24px;
-        position: relative;
+        position: relative; /* Penting! */
         z-index: 1;
         width: 100%;
       }
@@ -656,47 +685,25 @@
         margin-bottom: 8px;
       }
 
-      /* Homepage */
       .homepage {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         min-height: 100vh;
-        padding: 40px 24px;
+        padding: 0;
         position: relative;
+        width: 100%;
         z-index: 1;
         text-align: center;
+        overflow-y: auto;
+        overflow-x: hidden;
       }
 
-      .homepage::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url("./DSC_0209.jpg");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        filter: blur(5px);
-        z-index: -1;
-      }
-
-      .homepage::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.4);
-        z-index: -1;
-      }
+      /* HAPUS .homepage::before dan .homepage::after */
 
       [data-theme="dark"] .homepage::after {
-        background: rgba(0, 0, 0, 0.6);
+        background: rgba(0, 0, 0, 0.7);
       }
 
       .homepage.hidden {
@@ -706,19 +713,29 @@
       .homepage-logo {
         width: 85px;
         height: 85px;
-        margin-bottom: 20px;
         background: var(--bg-card);
         padding: 16px;
         border-radius: 18px;
         border: 2px solid var(--border);
         box-shadow: var(--shadow-lg);
         animation: fadeIn 0.8s ease;
+        position: absolute; /* TAMBAH ini */
+        top: 32px; /* TAMBAH ini - sejajar dengan navbar */
+        left: 50%; /* TAMBAH ini */
+        transform: translateX(-50%); /* TAMBAH ini */
+        z-index: 10; /* TAMBAH ini */
       }
 
       .homepage-logo img {
         width: 100%;
         height: 100%;
         object-fit: contain;
+      }
+
+      /* Hover effect */
+      .homepage-logo:hover {
+        transform: translateX(-50%) scale(1.05) rotate(-5deg);
+        border-color: var(--gradient-start);
       }
 
       .countdown-container {
@@ -911,6 +928,1077 @@
         display: none !important;
       }
 
+      /* ===== HOMEPAGE HERO WRAPPER ===== */
+      .homepage-hero {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 140px 24px 80px;
+        min-height: 100vh;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Background blur */
+      .homepage-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("./DSC_0209.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: blur(3px);
+        z-index: -2;
+      }
+
+      /* Dark overlay dengan gradient fade ke bawah */
+      .homepage-hero::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.5) 0%,
+          rgba(0, 0, 0, 0.6) 70%,
+          rgba(255, 255, 255, 0.95) 100% /* Fade ke warna section About */
+        );
+        z-index: -1;
+      }
+
+      /* Dark mode gradient */
+      [data-theme="dark"] .homepage-hero::after {
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.7) 0%,
+          rgba(0, 0, 0, 0.8) 70%,
+          rgba(17, 24, 39, 0.95) 100% /* Fade ke dark mode About section */
+        );
+      }
+
+      /* ===== HOMEPAGE SECTIONS CONTAINER ===== */
+      /* FORCE FULL WIDTH - Override Parent Padding/Margin */
+      .homepage-sections {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .homepage-footer {
+        width: 100vw !important; /* Full viewport width */
+        margin-left: calc(-50vw + 50%) !important; /* Breakout dari container */
+        margin-right: calc(-50vw + 50%) !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box;
+      }
+
+      /* Fix untuk body jika ada padding */
+      body {
+        overflow-x: hidden; /* Cegah horizontal scroll */
+      }
+
+      /* ===== 1. SECTION ABOUT - Clean White Background ===== */
+      .section-about {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 100px 40px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      [data-theme="dark"] .section-about {
+        background: rgba(17, 24, 39, 0.95);
+      }
+
+      .section-about::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(
+          circle,
+          rgba(220, 83, 86, 0.1),
+          transparent 70%
+        );
+        border-radius: 50%;
+      }
+
+      .section-content-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 60px;
+        align-items: center;
+      }
+
+      .about-logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .about-logo {
+        width: 280px;
+        height: 280px;
+        object-fit: contain;
+        filter: drop-shadow(0 20px 40px rgba(220, 83, 86, 0.2));
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .about-text-container {
+        text-align: left;
+      }
+
+      .section-heading {
+        font-size: 48px;
+        font-weight: 800;
+        letter-spacing: -2px;
+        margin-bottom: 24px;
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .about-description {
+        font-size: 18px;
+        line-height: 1.8;
+        color: var(--text-secondary);
+        margin-bottom: 20px;
+      }
+
+      .about-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-top: 40px;
+      }
+
+      .stat-item {
+        text-align: center;
+        padding: 24px;
+        background: var(--bg-secondary);
+        border-radius: 16px;
+        border: 2px solid var(--border);
+        transition: all 0.3s ease;
+      }
+
+      .stat-item:hover {
+        transform: translateY(-8px);
+        border-color: var(--gradient-start);
+        box-shadow: 0 12px 24px rgba(220, 83, 86, 0.2);
+      }
+
+      .stat-number {
+        font-size: 42px;
+        font-weight: 800;
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 8px;
+      }
+
+      .stat-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* ===== 2. SECTION RULES - Dark Gradient Background ===== */
+      .section-rules {
+        background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+        padding: 100px 40px;
+        position: relative;
+        overflow: visible; /* GANTI dari hidden */
+      }
+
+      [data-theme="dark"] .section-rules {
+        background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+      }
+
+      /* TAMBAHKAN gradient overlay di bottom */
+      .section-rules::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 150px; /* Tinggi gradient fade */
+        background: linear-gradient(
+          180deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.1) 40%,
+          rgba(255, 255, 255, 0.5) 70%,
+          rgba(255, 255, 255, 0.95) 100%
+            /* Fade ke warna section Requirements light mode */
+        );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      [data-theme="dark"] .section-rules::after {
+        background: linear-gradient(
+          180deg,
+          transparent 0%,
+          rgba(17, 24, 39, 0.3) 40%,
+          rgba(17, 24, 39, 0.7) 70%,
+          rgba(17, 24, 39, 0.95) 100% /* Fade ke dark mode Requirements */
+        );
+      }
+
+      .section-heading-alt {
+        font-size: 48px;
+        font-weight: 800;
+        letter-spacing: -2px;
+        text-align: center;
+        color: white;
+        margin-bottom: 16px;
+      }
+
+      .section-subtitle {
+        text-align: center;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 60px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .rules-grid {
+        max-width: 900px; /* KURANGI dari 1000px */
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px; /* KURANGI dari 32px */
+        position: relative;
+        z-index: 2;
+      }
+
+      .rules-card {
+        /* Glassmorphism lebih transparan */
+        background: rgba(255, 255, 255, 0.03); /* KURANGI dari 0.05 */
+        backdrop-filter: blur(10px) saturate(100%); /* TAMBAH blur */
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.15); /* KURANGI dari 0.1 */
+        border-radius: 24px;
+        padding: 36px 28px; /* KURANGI dari 40px 32px */
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        text-align: center;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); /* TAMBAH shadow */
+      }
+
+      .rules-card:hover {
+        transform: translateY(-12px);
+        background: rgba(
+          255,
+          255,
+          255,
+          0.08
+        ); /* Sedikit lebih solid saat hover */
+        border-color: rgba(220, 83, 86, 0.6);
+        box-shadow: 0 20px 60px rgba(220, 83, 86, 0.35);
+      }
+
+      .rules-card-icon {
+        width: 72px; /* KURANGI dari 80px */
+        height: 72px;
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        border-radius: 18px; /* KURANGI dari 20px */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px; /* KURANGI dari 24px */
+        box-shadow: 0 12px 24px rgba(220, 83, 86, 0.4);
+      }
+
+      .rules-card-icon svg {
+        width: 36px; /* KURANGI dari 40px */
+        height: 36px;
+        stroke: white;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .rules-card-title {
+        font-size: 22px; /* KURANGI dari 24px */
+        font-weight: 700;
+        color: white;
+        margin-bottom: 10px; /* KURANGI dari 12px */
+      }
+
+      .rules-card-desc {
+        font-size: 14px; /* KURANGI dari 15px */
+        color: rgba(255, 255, 255, 0.75); /* TINGKATKAN opacity sedikit */
+        line-height: 1.6;
+        margin-bottom: 24px; /* KURANGI dari 28px */
+      }
+
+      .rules-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        color: white;
+        padding: 12px 28px; /* KURANGI dari 14px 32px */
+        border-radius: 12px;
+        font-size: 14px; /* KURANGI dari 15px */
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(220, 83, 86, 0.3);
+      }
+
+      .rules-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(220, 83, 86, 0.5);
+      }
+
+      .rules-btn svg {
+        width: 16px; /* KURANGI dari 18px */
+        height: 16px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .rules-decoration {
+        position: absolute;
+        bottom: -100px;
+        right: -150px;
+        width: 700px;
+        height: 700px;
+        opacity: 0.05;
+        transform: rotate(-20deg);
+        pointer-events: none;
+      }
+
+      .rules-decoration img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      /* ===== 3. SECTION REQUIREMENTS - Split Layout ===== */
+      .section-requirements {
+        background: var(--bg-primary);
+        padding: 0;
+        position: relative;
+        overflow: visible;
+        box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.3); /* TAMBAH shadow di atas */
+      }
+
+      [data-theme="dark"] .section-requirements {
+        box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.6);
+      }
+
+      /* TAMBAHKAN gradient overlay di bottom */
+      .section-requirements::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 150px; /* Tinggi gradient fade */
+        background: linear-gradient(
+          180deg,
+          transparent 0%,
+          rgba(26, 26, 46, 0.3) 40%,
+          rgba(26, 26, 46, 0.7) 70%,
+          #1a1a2e 100% /* Fade ke warna section Procedure */
+        );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      [data-theme="dark"] .section-requirements::after {
+        background: linear-gradient(
+          180deg,
+          transparent 0%,
+          rgba(15, 23, 42, 0.3) 40%,
+          rgba(15, 23, 42, 0.7) 70%,
+          #0f172a 100% /* Fade ke dark mode Procedure */
+        );
+      }
+
+      .requirements-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 700px;
+      }
+
+      .requirements-image {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .image-wrapper {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+
+      .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          var(--bg-primary) 100%
+        );
+      }
+
+      .requirements-content {
+        padding: 80px 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .section-heading-dark {
+        font-size: 48px;
+        font-weight: 800;
+        letter-spacing: -2px;
+        margin-bottom: 20px;
+        color: var(--text-primary);
+      }
+
+      .requirements-intro {
+        font-size: 18px;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        line-height: 1.7;
+      }
+
+      .requirements-list {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .requirement-item {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+      }
+
+      .requirement-icon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        font-weight: 700;
+        flex-shrink: 0;
+        box-shadow: 0 8px 16px rgba(220, 83, 86, 0.3);
+      }
+
+      .requirement-text strong {
+        display: block;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+        text-align: left;
+      }
+
+      .requirement-text p {
+        font-size: 15px;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin: 0;
+        text-align: left;
+      }
+
+      /* ===== 4. SECTION PROCEDURE - Video Center ===== */
+      .section-procedure {
+        background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1e 100%);
+        padding: 100px 40px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.5); /* TAMBAH shadow di atas */
+      }
+
+      [data-theme="dark"] .section-procedure {
+        background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+        box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.7); /* Shadow lebih kuat di dark mode */
+      }
+
+      .section-procedure::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(220, 83, 86, 0.1),
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+
+      .section-heading-light {
+        font-size: 48px;
+        font-weight: 800;
+        letter-spacing: -2px;
+        text-align: center;
+        color: white;
+        margin-bottom: 10px; /* NAIKKAN dari 16px jadi 20px atau lebih */
+        position: relative;
+        z-index: 2;
+      }
+
+      .section-subtitle-light {
+        text-align: center;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 60px;
+        position: relative;
+        z-index: 2;
+        max-width: 700px; /* TAMBAH ini biar lebih rapi */
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .video-container {
+        max-width: 1000px;
+        margin: 0 auto 60px;
+        margin-top: 20px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+        height: 0;
+        overflow: hidden;
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        border: 2px solid rgba(220, 83, 86, 0.3);
+      }
+
+      .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 24px;
+      }
+
+      .video-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        border-radius: 24px;
+      }
+
+      .video-wrapper:hover .video-overlay {
+        opacity: 1;
+      }
+
+      .play-button {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 12px 32px rgba(220, 83, 86, 0.5);
+        transform: scale(1);
+        transition: transform 0.3s ease;
+      }
+
+      .video-wrapper:hover .play-button {
+        transform: scale(1.1);
+      }
+
+      .play-button svg {
+        width: 32px;
+        height: 32px;
+        fill: white;
+        margin-left: 4px;
+      }
+
+      .procedure-steps {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        max-width: 1100px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+      }
+
+      .step-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .step-number {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 800;
+        color: white;
+        box-shadow: 0 8px 20px rgba(220, 83, 86, 0.4);
+      }
+
+      .step-item p {
+        font-size: 15px;
+        font-weight: 600;
+        color: white;
+        text-align: center;
+        margin: 0;
+        max-width: 120px;
+      }
+
+      .step-arrow {
+        font-size: 32px;
+        color: rgba(255, 255, 255, 0.3);
+        font-weight: 300;
+      }
+
+      /* ===== 5. HOMEPAGE FOOTER - Full Width Glassmorphism ===== */
+      .homepage-footer {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background: rgba(26, 26, 46, 0.95);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      [data-theme="dark"] .homepage-footer {
+        background: rgba(15, 23, 42, 0.98);
+      }
+
+      /* Background Pattern */
+      /* Background Pattern dengan Logo */
+      /* Hapus ::before (logo kiri) */
+      .homepage-footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 30%,
+            rgba(220, 83, 86, 0.08),
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 80% 70%,
+            rgba(220, 83, 86, 0.05),
+            transparent 40%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* Sisakan ::after (logo kanan aja) */
+      .homepage-footer::after {
+        content: "";
+        position: absolute;
+        bottom: -80px;
+        right: -60px;
+        width: 480px;
+        height: 480px;
+        background-image: url("./Logo_outline.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.04;
+        transform: rotate(18deg);
+        pointer-events: none;
+        z-index: 0;
+        filter: blur(0px);
+      }
+
+      [data-theme="dark"] .homepage-footer::after {
+        opacity: 0.06;
+      }
+
+      /* Main Footer Content */
+      .footer-main {
+        padding: 80px 60px 60px;
+        max-width: 1400px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+      }
+
+      .footer-columns {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        gap: 60px;
+        margin-bottom: 0;
+      }
+
+      /* Column Brand (dengan Logo) */
+      .footer-brand {
+        max-width: 320px;
+      }
+
+      .footer-col h4 {
+        font-size: 18px;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 20px;
+        letter-spacing: -0.3px;
+      }
+
+      .footer-brand p {
+        font-size: 14px;
+        line-height: 1.8;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 24px;
+      }
+
+      /* Social Links - Horizontal */
+      .social-links {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .social-link {
+        width: 42px;
+        height: 42px;
+        background: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .social-link:hover {
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        border-color: var(--gradient-start);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(220, 83, 86, 0.4);
+      }
+
+      .social-icon {
+        width: 20px;
+        height: 20px;
+        stroke: rgba(255, 255, 255, 0.9);
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        transition: stroke 0.3s ease;
+      }
+
+      .social-link:hover .social-icon {
+        stroke: white;
+      }
+
+      /* Footer Links */
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-links li {
+        margin-bottom: 12px;
+      }
+
+      .footer-links a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        display: inline-block;
+        position: relative;
+        padding-left: 0;
+      }
+
+      .footer-links a::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        transition: width 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: white;
+        padding-left: 8px;
+      }
+
+      .footer-links a:hover::before {
+        width: 100%;
+      }
+
+      /* Footer Bottom - Full Width Dark Stripe */
+      .footer-bottom {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 24px 60px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .footer-bottom-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .footer-bottom p {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.6);
+        margin: 0;
+      }
+
+      .footer-bottom a {
+        color: var(--gradient-start);
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .footer-bottom a:hover {
+        color: var(--gradient-end);
+        text-decoration: underline;
+      }
+
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .footer-columns {
+          grid-template-columns: 1fr 1fr;
+          gap: 48px;
+        }
+
+        .footer-brand {
+          max-width: 100%;
+        }
+
+        .footer-main {
+          padding: 60px 40px 50px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .footer-main {
+          padding: 50px 24px 40px;
+        }
+
+        .footer-columns {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+
+        .footer-bottom {
+          padding: 20px 24px;
+        }
+
+        .footer-bottom-content {
+          flex-direction: column;
+          text-align: center;
+          gap: 8px;
+        }
+
+        .social-links {
+          justify-content: flex-start;
+        }
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 1024px) {
+        .section-content-wrapper {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .about-text-container {
+          text-align: center;
+        }
+
+        .about-logo {
+          width: 200px;
+          height: 200px;
+        }
+
+        .requirements-container {
+          grid-template-columns: 1fr;
+        }
+
+        .requirements-image {
+          height: 400px;
+        }
+
+        .rules-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .section-about,
+        .section-rules,
+        .section-procedure {
+          padding: 60px 24px;
+        }
+
+        .requirements-content {
+          padding: 60px 24px;
+        }
+
+        .section-heading,
+        .section-heading-alt,
+        .section-heading-dark,
+        .section-heading-light {
+          font-size: 32px;
+        }
+
+        .about-stats {
+          grid-template-columns: 1fr;
+        }
+
+        .procedure-steps {
+          flex-direction: column;
+        }
+
+        .step-arrow {
+          transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+          /* ... kode responsive lainnya ... */
+
+          .homepage-footer {
+            padding: 40px 24px 24px;
+          }
+
+          .footer-content {
+            grid-template-columns: 1fr;
+            gap: 32px;
+            margin-bottom: 32px;
+          }
+
+          .footer-section {
+            text-align: center;
+          }
+
+          .footer-link {
+            justify-content: center;
+          }
+
+          .social-links {
+            justify-content: center;
+          }
+        }
+      }
+
       /* Responsive */
       @media (max-width: 768px) {
         .container {
@@ -1020,6 +2108,377 @@
           font-size: 48px;
         }
       }
+
+      /* Menu Toggle - Enhanced */
+      .menu-toggle {
+        position: fixed;
+        top: 40px;
+        left: 40px;
+        width: 56px;
+        height: 56px;
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(10px) saturate(160%);
+        -webkit-backdrop-filter: blur(10px) saturate(160%);
+        border: 1.5px solid rgba(255, 255, 255, 0.25);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 1200;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2),
+          inset 0 1px 1px rgba(255, 255, 255, 0.2);
+      }
+
+      [data-theme="dark"] .menu-toggle {
+        background: rgba(31, 41, 55, 0.5);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .menu-toggle::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(220, 83, 86, 0.25),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      .menu-toggle:hover::before {
+        left: 100%;
+      }
+
+      .menu-toggle:hover {
+        transform: translateY(-2px);
+        border-color: rgba(220, 83, 86, 0.5);
+        background: rgba(220, 83, 86, 0.18);
+        box-shadow: 0 12px 28px rgba(220, 83, 86, 0.25),
+          inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      }
+
+      .menu-toggle svg {
+        width: 22px;
+        height: 22px;
+        stroke: #fff;
+        fill: none;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        transition: transform 0.3s ease;
+      }
+
+      .menu-toggle:hover svg {
+        transform: rotate(90deg);
+      }
+
+      /* Sidebar - Ultra Clean Glassmorphism */
+      .sidebar {
+        position: fixed;
+        top: 104px;
+        left: 40px;
+        width: 280px;
+        max-height: calc(100vh - 140px);
+
+        /* Enhanced Glassmorphism */
+        background: rgba(255, 255, 255, 0.001);
+        backdrop-filter: blur(5px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 24px;
+
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+          inset 0 1px 1px rgba(255, 255, 255, 0.15);
+
+        z-index: 1100;
+        transform: translateX(-420px) scale(0.95);
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        overflow: hidden;
+      }
+
+      [data-theme="dark"] .sidebar {
+        background: rgba(15, 23, 42, 0.25);
+        border-color: rgba(255, 255, 255, 0.15);
+      }
+
+      .sidebar.active {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+      }
+
+      /* Subtle Gradient Overlay - Top to Bottom */
+      .sidebar::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+            180deg,
+            rgba(220, 83, 86, 0.06) 0%,
+            transparent 40%,
+            transparent 60%,
+            rgba(220, 83, 86, 0.04) 100%
+          ),
+          radial-gradient(
+            circle at 50% 50%,
+            rgba(220, 83, 86, 0.05) 0%,
+            transparent 70%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Border Glow - Smooth */
+      .sidebar::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 24px;
+        padding: 1px;
+
+        /* Gradient dengan area transparan lebih besar */
+        background: linear-gradient(
+          135deg,
+          rgba(220, 83, 86, 0.6) 0%,
+          /* Sudut kiri atas */ rgba(220, 83, 86, 0.1) 10%,
+          transparent 20%,
+          /* MULAI transparan lebih cepat */ transparent 60%,
+          /* AREA TRANSPARAN LEBIH LUAS */ rgba(220, 83, 86, 0.3) 90%,
+          rgba(220, 83, 86, 0.5) 100% /* Sudut kanan bawah */
+        );
+
+        -webkit-mask: linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .sidebar.active::after {
+        opacity: 1;
+      }
+
+      .sidebar-header {
+        padding: 24px 24px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-radius: 24px 24px 0 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .sidebar-header h3 {
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: #fff;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      }
+
+      .close-btn {
+        background: rgba(220, 83, 86, 0.2);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(220, 83, 86, 0.4);
+        font-size: 22px;
+        color: #fff;
+        cursor: pointer;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        line-height: 1;
+        font-weight: 300;
+        box-shadow: 0 4px 12px rgba(220, 83, 86, 0.3);
+      }
+
+      .close-btn:hover {
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        border-color: var(--gradient-start);
+        transform: rotate(90deg) scale(1.05);
+        box-shadow: 0 6px 20px rgba(220, 83, 86, 0.5);
+      }
+
+      /* VERTICAL STACK LAYOUT - Clean & Modern */
+      .sidebar-nav {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        overflow-y: auto;
+        max-height: calc(100vh - 260px);
+        position: relative;
+        z-index: 10;
+      }
+
+      /* Custom Scrollbar */
+      .sidebar-nav::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      .sidebar-nav::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 10px;
+        margin: 8px 0;
+      }
+
+      .sidebar-nav::-webkit-scrollbar-thumb {
+        background: rgba(220, 83, 86, 0.4);
+        border-radius: 10px;
+        transition: background 0.3s ease;
+      }
+
+      .sidebar-nav::-webkit-scrollbar-thumb:hover {
+        background: rgba(220, 83, 86, 0.6);
+      }
+
+      /* Nav Link - Horizontal Card Style */
+      .nav-link {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 16px;
+        padding: 16px 20px;
+        color: rgba(255, 255, 255, 0.95);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        text-align: left;
+        transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(5px);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      [data-theme="dark"] .nav-link {
+        background: rgba(255, 255, 255, 0.03);
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .nav-icon {
+        width: 22px;
+        height: 22px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+      }
+
+      /* Smooth Shine Effect */
+      .nav-link::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.08),
+          transparent
+        );
+        transition: left 0.6s ease;
+      }
+
+      .nav-link:hover::before {
+        left: 100%;
+      }
+
+      /* Hover State - Smooth Glow */
+      .nav-link:hover {
+        transform: translateX(6px) translateY(-2px);
+        border-color: rgba(220, 83, 86, 0.5);
+        background: linear-gradient(
+          135deg,
+          rgba(220, 83, 86, 0.18),
+          rgba(197, 58, 61, 0.12)
+        );
+        box-shadow: 0 6px 20px rgba(220, 83, 86, 0.3),
+          inset 0 1px 1px rgba(255, 255, 255, 0.2);
+        color: #fff;
+      }
+
+      .nav-link:hover .nav-icon {
+        transform: scale(1.15) rotate(-8deg);
+        filter: drop-shadow(0 2px 8px rgba(220, 83, 86, 0.6));
+      }
+
+      .nav-link:active {
+        transform: translateX(4px) translateY(-1px);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .menu-toggle {
+          top: 20px;
+          left: 20px;
+          width: 52px;
+          height: 52px;
+        }
+
+        .sidebar {
+          top: 85px;
+          left: 20px;
+          width: calc(100vw - 40px);
+          max-width: 200px;
+          max-height: calc(100vh - 120px);
+        }
+
+        .sidebar-nav {
+          padding: 16px;
+          gap: 10px;
+          max-height: calc(100vh - 240px);
+        }
+
+        .nav-link {
+          padding: 14px 16px;
+          font-size: 13px;
+          gap: 14px;
+        }
+
+        .nav-icon {
+          width: 20px;
+          height: 20px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1046,47 +2505,419 @@
       </svg>
     </div>
 
+    <!-- Hamburger Menu Toggle -->
+    <div class="menu-toggle" id="menuToggle">
+      <svg viewBox="0 0 24 24">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h3>Menu</h3>
+        <button class="close-btn" id="closeSidebar">&times;</button>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#about" class="nav-link">
+          <svg viewBox="0 0 24 24" class="nav-icon">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          Tentang KPU
+        </a>
+        <a href="#rules" class="nav-link">
+          <svg viewBox="0 0 24 24" class="nav-icon">
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            ></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          Peraturan Pemilu
+        </a>
+        <a href="#requirements" class="nav-link">
+          <svg viewBox="0 0 24 24" class="nav-icon">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="8.5" cy="7" r="4"></circle>
+            <polyline points="17 11 19 13 23 9"></polyline>
+          </svg>
+          Syarat Pemilih
+        </a>
+        <a href="#procedure" class="nav-link">
+          <svg viewBox="0 0 24 24" class="nav-icon">
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+          </svg>
+          Tata Cara Pemilu
+        </a>
+      </nav>
+    </div>
+
+    <!-- Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <!-- Homepage -->
     <div id="homepage" class="homepage">
-      <div class="homepage-logo">
-        <img src="./cropped-hifi.png" alt="Logo HIFI" />
-      </div>
+      <!-- Hero Section (tetap di atas) -->
+      <div class="homepage-hero">
+        <div class="homepage-logo">
+          <img src="./cropped-hifi.png" alt="Logo HIFI" />
+        </div>
 
-      <div class="countdown-container">
-        <h3 class="countdown-title">Pemilihan Dimulai Dalam</h3>
-        <div class="countdown">
-          <div class="countdown-item">
-            <div class="countdown-value" id="days">00</div>
-            <div class="countdown-label">Hari</div>
-          </div>
-          <div class="countdown-item">
-            <div class="countdown-value" id="hours">00</div>
-            <div class="countdown-label">Jam</div>
-          </div>
-          <div class="countdown-item">
-            <div class="countdown-value" id="minutes">00</div>
-            <div class="countdown-label">Menit</div>
-          </div>
-          <div class="countdown-item">
-            <div class="countdown-value" id="seconds">00</div>
-            <div class="countdown-label">Detik</div>
+        <div class="countdown-container">
+          <h3 class="countdown-title">Pemilihan Dimulai Dalam</h3>
+          <div class="countdown">
+            <div class="countdown-item">
+              <div class="countdown-value" id="days">00</div>
+              <div class="countdown-label">Hari</div>
+            </div>
+            <div class="countdown-item">
+              <div class="countdown-value" id="hours">00</div>
+              <div class="countdown-label">Jam</div>
+            </div>
+            <div class="countdown-item">
+              <div class="countdown-value" id="minutes">00</div>
+              <div class="countdown-label">Menit</div>
+            </div>
+            <div class="countdown-item">
+              <div class="countdown-value" id="seconds">00</div>
+              <div class="countdown-label">Detik</div>
+            </div>
           </div>
         </div>
+
+        <div class="homepage-message">
+          <h2>Suara Anda, Masa Depan Kita</h2>
+          <p>
+            Partisipasi Anda sangat berarti dalam menentukan pemimpin yang akan
+            membawa himpunan kita menuju masa depan yang lebih baik. Mari
+            bersama-sama memilih sosok yang tepat untuk memimpin dan
+            mengembangkan organisasi kita.
+          </p>
+        </div>
+
+        <button class="homepage-btn" id="startVotingBtn">
+          📥 Mari Memilih 📥
+        </button>
       </div>
 
-      <div class="homepage-message">
-        <h2>Suara Anda, Masa Depan Kita</h2>
-        <p>
-          Partisipasi Anda sangat berarti dalam menentukan pemimpin yang akan
-          membawa himpunan kita menuju masa depan yang lebih baik. Mari
-          bersama-sama memilih sosok yang tepat untuk memimpin dan mengembangkan
-          organisasi kita.
-        </p>
-      </div>
+      <!-- Sections Content -->
+      <div class="homepage-sections">
+        <!-- 1. TENTANG KPU - Layout: Text + Logo Center -->
+        <section id="about" class="section-about">
+          <div class="section-content-wrapper">
+            <div class="about-logo-container">
+              <img src="./LogoKPU.png" alt="Logo KPU" class="about-logo" />
+            </div>
+            <div class="about-text-container">
+              <h2 class="section-heading">Tentang KPU HIFI</h2>
+              <p class="about-description">
+                Komisi Pemilihan Umum (KPU) HIFI adalah lembaga independen yang
+                bertugas menyelenggarakan pemilihan ketua himpunan secara
+                demokratis, transparan, dan akuntabel.
+              </p>
+              <p class="about-description">
+                KPU memastikan setiap suara mahasiswa didengar dan dihitung
+                dengan adil. Kami berkomitmen untuk menciptakan proses pemilihan
+                yang jujur, adil, dan mencerminkan aspirasi seluruh anggota
+                HIFI.
+              </p>
+              <div class="about-stats">
+                <div class="stat-item">
+                  <div class="stat-number">100%</div>
+                  <div class="stat-label">Transparansi</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">3</div>
+                  <div class="stat-label">Kandidat</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">1</div>
+                  <div class="stat-label">Suara/Pemilih</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <button class="homepage-btn" id="startVotingBtn">
-        📥 Mari Memilih 📥
-      </button>
+        <!-- 2. PERATURAN PEMILU - Layout: Grid Cards dengan Image -->
+        <section id="rules" class="section-rules">
+          <h2 class="section-heading-alt">Peraturan Pemilihan</h2>
+          <p class="section-subtitle">
+            Unduh dokumen persyaratan resmi untuk kandidat dan tim sukses
+          </p>
+
+          <div class="rules-grid">
+            <!-- Card 1 -->
+            <div class="rules-card">
+              <div class="rules-card-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="8.5" cy="7" r="4"></circle>
+                  <line x1="20" y1="8" x2="20" y2="14"></line>
+                  <line x1="23" y1="11" x2="17" y2="11"></line>
+                </svg>
+              </div>
+              <h3 class="rules-card-title">Persyaratan Calon Ketua</h3>
+              <p class="rules-card-desc">
+                Dokumen lengkap persyaratan untuk mendaftar sebagai calon ketua
+                himpunan
+              </p>
+              <a href="#" class="rules-btn" download>
+                <svg viewBox="0 0 24 24">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download PDF
+              </a>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="rules-card">
+              <div class="rules-card-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <h3 class="rules-card-title">Persyaratan Tim Sukses</h3>
+              <p class="rules-card-desc">
+                Ketentuan dan regulasi untuk pembentukan tim sukses kandidat
+              </p>
+              <a href="#" class="rules-btn" download>
+                <svg viewBox="0 0 24 24">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Decorative Image -->
+          <div class="rules-decoration">
+            <img src="./cropped-hifi.png" alt="Decoration" />
+          </div>
+        </section>
+
+        <!-- 3. SYARAT PEMILIH - Layout: Split (Image Left, Text Right) -->
+        <section id="requirements" class="section-requirements">
+          <div class="requirements-container">
+            <div class="requirements-image">
+              <div class="image-wrapper">
+                <img src="./DSC_0209.jpg" alt="Pemilih" />
+                <div class="image-overlay"></div>
+              </div>
+            </div>
+            <div class="requirements-content">
+              <h2 class="section-heading-dark">Syarat Pemilih</h2>
+              <p class="requirements-intro">
+                Pastikan Anda memenuhi kriteria berikut untuk dapat
+                berpartisipasi dalam pemilihan:
+              </p>
+
+              <div class="requirements-list">
+                <div class="requirement-item">
+                  <div class="requirement-icon">✓</div>
+                  <div class="requirement-text">
+                    <strong>Mahasiswa Aktif</strong>
+                    <p>
+                      Terdaftar sebagai mahasiswa aktif Fakultas Informatika
+                      Unpad
+                    </p>
+                  </div>
+                </div>
+                <div class="requirement-item">
+                  <div class="requirement-icon">✓</div>
+                  <div class="requirement-text">
+                    <strong>Anggota HIFI</strong>
+                    <p>Anggota resmi HIFI angkatan 2022, 2023, atau 2024</p>
+                  </div>
+                </div>
+                <div class="requirement-item">
+                  <div class="requirement-icon">✓</div>
+                  <div class="requirement-text">
+                    <strong>Email Unpad</strong>
+                    <p>Menggunakan email domain @mail.unpad.ac.id</p>
+                  </div>
+                </div>
+                <div class="requirement-item">
+                  <div class="requirement-icon">✓</div>
+                  <div class="requirement-text">
+                    <strong>Belum Memilih</strong>
+                    <p>Belum pernah memberikan suara dalam pemilihan ini</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. TATA CARA PEMILIHAN - Layout: Video Player Center -->
+        <section id="procedure" class="section-procedure">
+          <h2 class="section-heading-light">Tata Cara Pemilihan</h2>
+          <p class class="section-subtitle-light">
+            Tonton video tutorial lengkap proses pemilihan ketua himpunan
+          </p>
+
+          <div class="video-container">
+            <div class="video-wrapper">
+              <iframe
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                title="Tutorial Pemilihan"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              >
+              </iframe>
+              <div class="video-overlay">
+                <div class="play-button">
+                  <svg viewBox="0 0 24 24">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. FOOTER - Glassmorphism Style -->
+          <!-- 5. FOOTER - Full Width Glassmorphism -->
+          <footer class="homepage-footer">
+            <div class="footer-main">
+              <div class="footer-columns">
+                <!-- Column 1: Logo + Description -->
+                <div class="footer-col footer-brand">
+                  <h4>KPU HIFI 2025</h4>
+                  <p>
+                    Komisi Pemilihan Umum dengan integritas tinggi untuk
+                    menciptakan pemilu yang adil dan transparan.
+                  </p>
+                  <div class="social-links">
+                    <a
+                      href="https://instagram.com/hifi_unpad"
+                      target="_blank"
+                      class="social-link"
+                    >
+                      <svg viewBox="0 0 24 24" class="social-icon">
+                        <rect
+                          x="2"
+                          y="2"
+                          width="20"
+                          height="20"
+                          rx="5"
+                          ry="5"
+                        ></rect>
+                        <path
+                          d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                        ></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                      </svg>
+                    </a>
+                    <a
+                      href="https://twitter.com/hifi_unpad"
+                      target="_blank"
+                      class="social-link"
+                    >
+                      <svg viewBox="0 0 24 24" class="social-icon">
+                        <path
+                          d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
+                        ></path>
+                      </svg>
+                    </a>
+                    <a
+                      href="https://linkedin.com/company/hifi-unpad"
+                      target="_blank"
+                      class="social-link"
+                    >
+                      <svg viewBox="0 0 24 24" class="social-icon">
+                        <path
+                          d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                        ></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                      </svg>
+                    </a>
+                    <a
+                      href="mailto:kpu@hifi.unpad.ac.id"
+                      target="_blank"
+                      class="social-link"
+                    >
+                      <svg viewBox="0 0 24 24" class="social-icon">
+                        <path
+                          d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                        ></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Column 2: Informasi -->
+                <div class="footer-col">
+                  <h4>Informasi</h4>
+                  <ul class="footer-links">
+                    <li><a href="#about">Tentang KPU</a></li>
+                    <li><a href="#rules">Peraturan Pemilu</a></li>
+                    <li><a href="#requirements">Syarat Pemilih</a></li>
+                    <li><a href="#procedure">Tata Cara</a></li>
+                  </ul>
+                </div>
+
+                <!-- Column 3: Legal -->
+                <div class="footer-col">
+                  <h4>Legal</h4>
+                  <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Kontak Kami</a></li>
+                    <li><a href="#">FAQ</a></li>
+                  </ul>
+                </div>
+
+                <!-- Column 4: Kontak -->
+                <div class="footer-col">
+                  <h4>Hubungi Kami</h4>
+                  <ul class="footer-links">
+                    <li>
+                      <a href="mailto:kpu@hifi.unpad.ac.id"
+                        >kpu@hifi.unpad.ac.id</a
+                      >
+                    </li>
+                    <li><a href="tel:+622187654321">+62 21 8765 4321</a></li>
+                    <li>Jl. Dipatiukur No. 35<br />Bandung, Jawa Barat</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+              <div class="footer-bottom-content">
+                <p>&copy; 2025 KPU HIFI. All Rights Reserved.</p>
+                <p>
+                  Developed by
+                  <a href="https://instagram.com/mndzww__" target="_blank"
+                    >@mndzww__</a
+                  >
+                </p>
+              </div>
+            </div>
+          </footer>
+        </section>
+      </div>
     </div>
 
     <!-- Register Page -->
@@ -1139,16 +2970,6 @@
                 class="form-input"
                 id="email"
                 placeholder="nama@mail.unpad.ac.id"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Password</label>
-              <input
-                type="password"
-                class="form-input"
-                id="password"
-                placeholder="Minimal 6 karakter"
                 required
               />
             </div>
@@ -1470,6 +3291,47 @@
         updateIcon(next);
       });
 
+      // Sidebar Menu
+      const menuToggle = document.getElementById("menuToggle");
+      const sidebar = document.getElementById("sidebar");
+      const closeSidebar = document.getElementById("closeSidebar");
+
+      menuToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("active");
+      });
+
+      closeSidebar.addEventListener("click", () => {
+        sidebar.classList.remove("active");
+      });
+
+      // Close sidebar when clicking nav links
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          sidebar.classList.remove("active");
+
+          const targetId = link.getAttribute("href").substring(1);
+          const targetSection = document.getElementById(targetId);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: "smooth" });
+          }
+        });
+      });
+
+      // Close sidebar when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+          sidebar.classList.remove("active");
+        }
+      });
+
+      // Close with ESC
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          sidebar.classList.remove("active");
+        }
+      });
+
       function updateIcon(t) {
         if (t === "dark") {
           lightIcon.style.display = "none";
@@ -1507,11 +3369,12 @@
         e.preventDefault();
 
         const fullName = document.getElementById("fullName").value.trim();
-        // const username = document.getElementById("username").value.trim();
+        // HAPUS baris username (sudah di-comment)
         const nim = document.getElementById("nim").value.trim();
         const angkatan = document.getElementById("angkatan").value;
         const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
+        // HAPUS baris password ini:
+        // const password = document.getElementById("password").value;
 
         // Validasi email domain
         if (
@@ -1524,10 +3387,14 @@
           return;
         }
 
-        if (password.length < 6) {
-          alert("Password minimal 6 karakter");
-          return;
-        }
+        // HAPUS validasi password:
+        // if (password.length < 6) {
+        //   alert("Password minimal 6 karakter");
+        //   return;
+        // }
+
+        // TAMBAHKAN: Generate random password
+        const generatedPassword = generateRandomPassword(10);
 
         try {
           const {
@@ -1541,7 +3408,7 @@
           const userCredential = await createUserWithEmailAndPassword(
             window.firebaseAuth,
             email,
-            password
+            generatedPassword // GANTI dari password jadi generatedPassword
           );
           const user = userCredential.user;
 
@@ -1559,8 +3426,12 @@
           // Kirim email verifikasi
           await sendEmailVerification(user);
 
+          // TAMBAHKAN: Tampilkan password (sementara, karena tidak bisa kirim email otomatis)
           alert(
-            "Registrasi berhasil! Silakan cek email Anda untuk verifikasi akun sebelum login."
+            `Registrasi berhasil!\n\n` +
+              `Password Anda: ${generatedPassword}\n\n` +
+              `SIMPAN password ini!\n\n` +
+              `Silakan cek email untuk verifikasi akun sebelum login.`
           );
 
           // Reset form & redirect ke login
@@ -1577,62 +3448,31 @@
         }
       });
 
-      // Login Form
-      const loginForm = document.getElementById("loginForm");
-      loginForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
+      // TAMBAHKAN Function baru ini (taruh sebelum Register Form atau di atas)
+      function generateRandomPassword(length) {
+        const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const lowercase = "abcdefghijklmnopqrstuvwxyz";
+        const numbers = "0123456789";
+        const symbols = "!@#$%^&*";
+        const allChars = uppercase + lowercase + numbers + symbols;
 
-        const email = document.getElementById("loginEmail").value.trim();
-        const password = document.getElementById("loginPassword").value;
+        let password = "";
+        // Pastikan ada minimal 1 huruf besar, 1 huruf kecil, 1 angka
+        password += uppercase[Math.floor(Math.random() * uppercase.length)];
+        password += lowercase[Math.floor(Math.random() * lowercase.length)];
+        password += numbers[Math.floor(Math.random() * numbers.length)];
 
-        try {
-          const { signInWithEmailAndPassword, doc, getDoc } =
-            window.firebaseModules;
-
-          const userCredential = await signInWithEmailAndPassword(
-            window.firebaseAuth,
-            email,
-            password
-          );
-          const user = userCredential.user;
-
-          if (!user.emailVerified) {
-            alert("Harap verifikasi email terlebih dahulu sebelum login.");
-            await window.firebaseAuth.signOut();
-            return;
-          }
-
-          // Cek apakah user sudah vote
-          const userDoc = await getDoc(
-            doc(window.firebaseDb, "users", user.uid)
-          );
-          if (userDoc.exists() && userDoc.data().hasVoted) {
-            alert("Anda sudah melakukan voting sebelumnya.");
-            await window.firebaseAuth.signOut();
-            return;
-          }
-
-          // Simpan session
-          sessionStorage.setItem("userId", user.uid);
-          sessionStorage.setItem("userEmail", user.email);
-
-          // Navigate ke voting page
-          loginForm.reset();
-          loginPage.classList.add("hidden");
-          votingPage.classList.remove("hidden");
-          window.scrollTo(0, 0);
-        } catch (error) {
-          console.error(error);
-          if (
-            error.code === "auth/wrong-password" ||
-            error.code === "auth/user-not-found"
-          ) {
-            alert("Email atau password salah.");
-          } else {
-            alert("Login gagal: " + error.message);
-          }
+        // Sisa karakter random
+        for (let i = 3; i < length; i++) {
+          password += allChars[Math.floor(Math.random() * allChars.length)];
         }
-      });
+
+        // Acak urutan karakter
+        return password
+          .split("")
+          .sort(() => Math.random() - 0.5)
+          .join("");
+      }
 
       // Voting Logic
       let selectedId = null;
@@ -1695,5 +3535,3 @@
     </script>
   </body>
 </html>
-
-
