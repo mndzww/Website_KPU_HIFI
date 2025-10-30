@@ -1,4 +1,4 @@
-<!-- Developed by @mndzww__ -->
+<!-- Developed by @mndzww -->
 <!-- Last Updated 04/10/2025 - 22:31 -->
 <!-- Integrated with Firebase Authentication -->
 
@@ -129,6 +129,25 @@
         transition: all 0.3s ease;
         z-index: 1200;
         box-shadow: var(--shadow-md);
+      }
+
+      /* Tambahkan di bagian CSS .menu-toggle */
+      .menu-toggle.page-specific {
+        display: flex; /* Default tampil */
+      }
+
+      /* Hide di voting page */
+      #votingPage:not(.hidden) ~ .menu-toggle.page-specific {
+        display: none !important;
+      }
+
+      body.voting-active .menu-toggle {
+        display: none !important;
+      }
+
+      /* ATAU pakai JS untuk kontrol lebih mudah */
+      .menu-toggle.hidden {
+        display: none !important;
       }
 
       /* Menu Toggle */
@@ -672,6 +691,41 @@
         box-shadow: var(--shadow-lg);
       }
 
+      .home-btn {
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        color: white;
+        border: none;
+        padding: 18px 48px;
+        border-radius: 16px;
+        font-size: 17px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: var(--shadow-xl);
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 32px;
+      }
+
+      .home-btn:hover {
+        transform: translateY(-4px) scale(1.05);
+        box-shadow: 0 25px 50px rgba(220, 83, 86, 0.3);
+      }
+
+      .home-btn:active {
+        transform: translateY(-2px) scale(1.02);
+      }
+
+      .home-btn svg {
+        width: 22px;
+        height: 22px;
+      }
+
       .footer {
         text-align: center;
         padding: 25px 20px;
@@ -949,7 +1003,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url("./DSC_0209.png");
+        background-image: url("./DSC_0209.jpg");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -1732,6 +1786,7 @@
         color: white;
         margin-bottom: 20px;
         letter-spacing: -0.3px;
+        text-align: left;
       }
 
       .footer-brand p {
@@ -1739,6 +1794,7 @@
         line-height: 1.8;
         color: rgba(255, 255, 255, 0.7);
         margin-bottom: 24px;
+        text-align: left;
       }
 
       /* Social Links - Horizontal */
@@ -1793,6 +1849,7 @@
         list-style: none;
         padding: 0;
         margin: 0;
+        text-align: left;
       }
 
       .footer-links li {
@@ -2180,7 +2237,7 @@
         transform: rotate(90deg);
       }
 
-      /* Sidebar - Ultra Clean Glassmorphism */
+      /* Sidebar - Glassmorphism */
       .sidebar {
         position: fixed;
         top: 104px;
@@ -2479,9 +2536,212 @@
           height: 20px;
         }
       }
+
+      /* Toast Notification - TAMBAHKAN DI AKHIR CSS */
+      #toastContainer {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        pointer-events: none;
+      }
+
+      .toast {
+        /* Glassmorphism Effect */
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        border: 1.5px solid rgba(255, 255, 255, 0.25);
+        border-radius: 20px;
+        padding: 20px 24px;
+        min-width: 320px;
+        max-width: 420px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25),
+          inset 0 1px 1px rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        pointer-events: auto;
+        animation: slideInRight 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      [data-theme="dark"] .toast {
+        background: rgba(15, 23, 42, 0.12);
+        border-color: rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+          inset 0 1px 1px rgba(255, 255, 255, 0.15);
+      }
+
+      /* Gradient overlay untuk depth */
+      .toast::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 50%,
+          rgba(0, 0, 0, 0.05) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+
+      /* Border glow untuk masing-masing type */
+      .toast.success {
+        border-left: 4px solid rgba(16, 185, 129, 0.8);
+        box-shadow: 0 8px 32px rgba(16, 185, 129, 0.2),
+          inset 0 1px 1px rgba(255, 255, 255, 0.2);
+      }
+
+      .toast.error {
+        border-left: 4px solid rgba(239, 68, 68, 0.8);
+        box-shadow: 0 8px 32px rgba(239, 68, 68, 0.2),
+          inset 0 1px 1px rgba(255, 255, 255, 0.2);
+      }
+
+      .toast.warning {
+        border-left: 4px solid rgba(245, 158, 11, 0.8);
+        box-shadow: 0 8px 32px rgba(245, 158, 11, 0.2),
+          inset 0 1px 1px rgba(255, 255, 255, 0.2);
+      }
+
+      .toast.info {
+        border-left: 4px solid rgba(59, 130, 246, 0.8);
+        box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2),
+          inset 0 1px 1px rgba(255, 255, 255, 0.2);
+      }
+
+      .toast-icon {
+        width: 28px;
+        height: 28px;
+        flex-shrink: 0;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .toast.success .toast-icon {
+        stroke: #10b981;
+      }
+
+      .toast.error .toast-icon {
+        stroke: #ef4444;
+      }
+
+      .toast.warning .toast-icon {
+        stroke: #f59e0b;
+      }
+
+      .toast.info .toast-icon {
+        stroke: #3b82f6;
+      }
+
+      .toast-content {
+        flex: 1;
+      }
+
+      .toast-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+      }
+
+      .toast-message {
+        font-size: 14px;
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+
+      .toast-close {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 20px;
+        cursor: pointer;
+        padding: 0;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+
+      .toast-close:hover {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+      }
+
+      @keyframes slideInRight {
+        from {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideOutRight {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+      }
+
+      .toast.removing {
+        animation: slideOutRight 0.3s ease forwards;
+      }
+
+      @media (max-width: 768px) {
+        #toastContainer {
+          top: 10px;
+          right: 10px;
+          left: 10px;
+        }
+
+        .toast {
+          min-width: auto;
+          width: 100%;
+        }
+      }
+
+      /* Password Toast - Lebih lebar */
+      .toast.password-toast {
+        min-width: 380px;
+        max-width: 450px;
+      }
+
+      @media (max-width: 768px) {
+        .toast.password-toast {
+          min-width: auto;
+          max-width: calc(100vw - 40px);
+        }
+      }
     </style>
   </head>
   <body>
+    <!-- Toast Notification Container - TAMBAHKAN INI -->
+    <div id="toastContainer"></div>
+
     <!-- Theme Toggle -->
     <div class="theme-toggle" id="themeToggle">
       <svg id="lightIcon" viewBox="0 0 24 24">
@@ -2506,7 +2766,8 @@
     </div>
 
     <!-- Hamburger Menu Toggle -->
-    <div class="menu-toggle" id="menuToggle">
+    <!-- Menu Toggle - TAMBAHKAN class "page-specific" -->
+    <div class="menu-toggle page-specific" id="menuToggle">
       <svg viewBox="0 0 24 24">
         <line x1="3" y1="12" x2="21" y2="12"></line>
         <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -2596,7 +2857,7 @@
         </div>
 
         <div class="homepage-message">
-          <h2>Suara Anda, Masa Depan Kita</h2>
+          <h2>Suara Anda, Masa Depan Kita Bersama</h2>
           <p>
             Partisipasi Anda sangat berarti dalam menentukan pemimpin yang akan
             membawa himpunan kita menuju masa depan yang lebih baik. Mari
@@ -2632,17 +2893,17 @@
                 HIFI.
               </p>
               <div class="about-stats">
-                <div class="stat-item">
+                <!-- <div class="stat-item">
                   <div class="stat-number">100%</div>
                   <div class="stat-label">Transparansi</div>
-                </div>
+                </div> -->
                 <div class="stat-item">
                   <div class="stat-number">3</div>
                   <div class="stat-label">Kandidat</div>
                 </div>
                 <div class="stat-item">
-                  <div class="stat-number">1</div>
-                  <div class="stat-label">Suara/Pemilih</div>
+                  <div class="stat-number">296</div>
+                  <div class="stat-label">Total Pemilih Tetap</div>
                 </div>
               </div>
             </div>
@@ -2718,7 +2979,7 @@
           <div class="requirements-container">
             <div class="requirements-image">
               <div class="image-wrapper">
-                <img src="./DSC_0209.png" alt="Pemilih" />
+                <img src="./DSC_0209.jpg" alt="Pemilih" />
                 <div class="image-overlay"></div>
               </div>
             </div>
@@ -2892,12 +3153,15 @@
                   <h4>Hubungi Kami</h4>
                   <ul class="footer-links">
                     <li>
-                      <a href="mailto:kpu@hifi.unpad.ac.id"
-                        >kpu@hifi.unpad.ac.id</a
+                      <a href="mailto:kpuhifi.fmipaunpad@gmail.com"
+                        >kpuhifi.fmipaunpad@gmail.com</a
                       >
                     </li>
-                    <li><a href="tel:+622187654321">+62 21 8765 4321</a></li>
-                    <li>Jl. Dipatiukur No. 35<br />Bandung, Jawa Barat</li>
+                    <li><a href="tel:+6281281003917">+62 812 8100 3917</a></li>
+                    <li>
+                      Jl. Raya Bandung Sumedang KM.21, Hegarmanah, Kec.
+                      Jatinangor<br />Kabupaten Sumedang, Jawa Barat 45363
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -2911,6 +3175,10 @@
                   Developed by
                   <a href="https://instagram.com/mndzww__" target="_blank"
                     >@mndzww__</a
+                  >
+                  &
+                  <a href="https://instagram.com/sandyfauzii_" target="_blank"
+                    >@sandyfauzii_</a
                   >
                 </p>
               </div>
@@ -3154,7 +3422,7 @@
           </div>
         </div>
 
-        <!-- Success -->
+        <!-- Success Screen - TAMBAHKAN button home di bawah success-box -->
         <div class="success" id="successScreen">
           <div class="success-icon">
             <svg viewBox="0 0 24 24">
@@ -3164,6 +3432,20 @@
           <h2>Terima Kasih!</h2>
           <p>Suara Anda telah berhasil direkam untuk kandidat:</p>
           <div class="success-box" id="selectedName"></div>
+
+          <!-- TAMBAHKAN INI -->
+          <button class="home-btn" id="homeBtn">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Kembali ke Beranda
+          </button>
         </div>
 
         <!-- Footer -->
@@ -3214,6 +3496,7 @@
         createUserWithEmailAndPassword,
         signInWithEmailAndPassword,
         sendEmailVerification,
+        onAuthStateChanged,
         doc,
         setDoc,
         getDoc,
@@ -3291,6 +3574,19 @@
         updateIcon(next);
       });
 
+      // Navbar visibility control
+      function updateNavbarVisibility(currentPage) {
+        const menuToggle = document.getElementById("menuToggle");
+        const sidebar = document.getElementById("sidebar");
+
+        if (currentPage === "voting" || currentPage === "success") {
+          menuToggle.classList.add("hidden");
+          sidebar.classList.remove("active"); // Close sidebar juga
+        } else {
+          menuToggle.classList.remove("hidden");
+        }
+      }
+
       // Sidebar Menu
       const menuToggle = document.getElementById("menuToggle");
       const sidebar = document.getElementById("sidebar");
@@ -3305,19 +3601,42 @@
       });
 
       // Close sidebar when clicking nav links
+      // Close sidebar when clicking nav links - UPDATE INI
       document.querySelectorAll(".nav-link").forEach((link) => {
         link.addEventListener("click", (e) => {
           e.preventDefault();
           sidebar.classList.remove("active");
 
           const targetId = link.getAttribute("href").substring(1);
-          const targetSection = document.getElementById(targetId);
-          if (targetSection) {
-            targetSection.scrollIntoView({ behavior: "smooth" });
+
+          // CEK: Apakah sedang di register/login page?
+          const isOnAuthPage =
+            !registerPage.classList.contains("hidden") ||
+            !loginPage.classList.contains("hidden");
+
+          if (isOnAuthPage) {
+            // Redirect ke homepage dulu, baru scroll ke section
+            registerPage.classList.add("hidden");
+            loginPage.classList.add("hidden");
+            homepage.classList.remove("hidden");
+            updateNavbarVisibility("homepage");
+
+            // Tunggu sebentar baru scroll (biar homepage render dulu)
+            setTimeout(() => {
+              const targetSection = document.getElementById(targetId);
+              if (targetSection) {
+                targetSection.scrollIntoView({ behavior: "smooth" });
+              }
+            }, 100);
+          } else {
+            // Kalau sudah di homepage, langsung scroll
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+              targetSection.scrollIntoView({ behavior: "smooth" });
+            }
           }
         });
       });
-
       // Close sidebar when clicking outside
       document.addEventListener("click", (e) => {
         if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
@@ -3342,10 +3661,46 @@
         }
       }
 
+      // Custom Toast Notification
+      function showToast(title, message, type = "info", duration = 10000) {
+        const container = document.getElementById("toastContainer");
+        const toast = document.createElement("div");
+        toast.className = `toast ${type}`;
+
+        // Icon berdasarkan type
+        const icons = {
+          success:
+            '<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+          error:
+            '<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>',
+          warning:
+            '<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>',
+          info: '<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
+        };
+
+        toast.innerHTML = `
+    ${icons[type]}
+    <div class="toast-content">
+      <div class="toast-title">${title}</div>
+      <div class="toast-message">${message}</div>
+    </div>
+    <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+  `;
+
+        container.appendChild(toast);
+
+        // Auto remove setelah duration
+        setTimeout(() => {
+          toast.classList.add("removing");
+          setTimeout(() => toast.remove(), 300);
+        }, duration);
+      }
+
       // Navigation
       startVotingBtn.addEventListener("click", () => {
         homepage.classList.add("hidden");
         registerPage.classList.remove("hidden");
+        updateNavbarVisibility("register");
         window.scrollTo(0, 0);
       });
 
@@ -3353,6 +3708,7 @@
         e.preventDefault();
         registerPage.classList.add("hidden");
         loginPage.classList.remove("hidden");
+        updateNavbarVisibility("voting");
         window.scrollTo(0, 0);
       });
 
@@ -3363,92 +3719,7 @@
         window.scrollTo(0, 0);
       });
 
-      // Register Form
-      const registerForm = document.getElementById("registerForm");
-      registerForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const fullName = document.getElementById("fullName").value.trim();
-        // HAPUS baris username (sudah di-comment)
-        const nim = document.getElementById("nim").value.trim();
-        const angkatan = document.getElementById("angkatan").value;
-        const email = document.getElementById("email").value.trim();
-        // HAPUS baris password ini:
-        // const password = document.getElementById("password").value;
-
-        // Validasi email domain
-        if (
-          !email.endsWith("@mail.unpad.ac.id") &&
-          !email.endsWith("@unpad.ac.id")
-        ) {
-          alert(
-            "Email harus menggunakan domain @mail.unpad.ac.id atau @unpad.ac.id"
-          );
-          return;
-        }
-
-        // HAPUS validasi password:
-        // if (password.length < 6) {
-        //   alert("Password minimal 6 karakter");
-        //   return;
-        // }
-
-        // TAMBAHKAN: Generate random password
-        const generatedPassword = generateRandomPassword(10);
-
-        try {
-          const {
-            createUserWithEmailAndPassword,
-            sendEmailVerification,
-            doc,
-            setDoc,
-            serverTimestamp,
-          } = window.firebaseModules;
-
-          const userCredential = await createUserWithEmailAndPassword(
-            window.firebaseAuth,
-            email,
-            generatedPassword // GANTI dari password jadi generatedPassword
-          );
-          const user = userCredential.user;
-
-          // Simpan data user ke Firestore
-          await setDoc(doc(window.firebaseDb, "users", user.uid), {
-            fullName,
-            nim,
-            angkatan,
-            email,
-            createdAt: serverTimestamp(),
-            hasVoted: false,
-            votedFor: null,
-          });
-
-          // Kirim email verifikasi
-          await sendEmailVerification(user);
-
-          // TAMBAHKAN: Tampilkan password (sementara, karena tidak bisa kirim email otomatis)
-          alert(
-            `Registrasi berhasil!\n\n` +
-              `Password Anda: ${generatedPassword}\n\n` +
-              `SIMPAN password ini!\n\n` +
-              `Silakan cek email untuk verifikasi akun sebelum login.`
-          );
-
-          // Reset form & redirect ke login
-          registerForm.reset();
-          registerPage.classList.add("hidden");
-          loginPage.classList.remove("hidden");
-        } catch (error) {
-          console.error(error);
-          if (error.code === "auth/email-already-in-use") {
-            alert("Email sudah terdaftar. Silakan login.");
-          } else {
-            alert("Gagal registrasi: " + error.message);
-          }
-        }
-      });
-
-      // TAMBAHKAN Function baru ini (taruh sebelum Register Form atau di atas)
+      // Generate Random Password Function
       function generateRandomPassword(length) {
         const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const lowercase = "abcdefghijklmnopqrstuvwxyz";
@@ -3474,6 +3745,200 @@
           .join("");
       }
 
+      // Register Form
+      const registerForm = document.getElementById("registerForm");
+      registerForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const fullName = document.getElementById("fullName").value.trim();
+        const nim = document.getElementById("nim").value.trim();
+        const angkatan = document.getElementById("angkatan").value;
+        const email = document.getElementById("email").value.trim();
+
+        // Validasi email domain
+        if (
+          !email.endsWith("@mail.unpad.ac.id") &&
+          !email.endsWith("@unpad.ac.id")
+        ) {
+          showToast(
+            "Email harus menggunakan domain @mail.unpad.ac.id atau @unpad.ac.id"
+          );
+          return;
+        }
+
+        // Generate random password
+        const generatedPassword = generateRandomPassword(10);
+
+        try {
+          const {
+            createUserWithEmailAndPassword,
+            sendEmailVerification,
+            doc,
+            setDoc,
+            serverTimestamp,
+          } = window.firebaseModules;
+
+          const userCredential = await createUserWithEmailAndPassword(
+            window.firebaseAuth,
+            email,
+            generatedPassword
+          );
+          const user = userCredential.user;
+
+          // Simpan data user ke Firestore
+          await setDoc(doc(window.firebaseDb, "users", user.uid), {
+            fullName,
+            nim,
+            angkatan,
+            email,
+            createdAt: serverTimestamp(),
+            hasVoted: false,
+            votedFor: null,
+          });
+
+          // Kirim email verifikasi
+          await sendEmailVerification(user);
+
+          // Tampilkan password
+          // Tampilkan password modal
+          showPasswordModal(generatedPassword);
+
+          // Reset form & redirect ke login
+          registerForm.reset();
+          registerPage.classList.add("hidden");
+          loginPage.classList.remove("hidden");
+        } catch (error) {
+          console.error(error);
+          if (error.code === "auth/email-already-in-use") {
+            showToast("Email sudah terdaftar. Silakan login.");
+          } else {
+            showToast("Gagal registrasi: " + error.message);
+          }
+        }
+      });
+
+      // ===== LOGIN FORM (YANG HILANG - INI YANG PENTING!) =====
+      const loginForm = document.getElementById("loginForm");
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value;
+
+        // Validasi domain email
+        if (
+          !email.endsWith("@mail.unpad.ac.id") &&
+          !email.endsWith("@unpad.ac.id")
+        ) {
+          showToast(
+            "Email harus menggunakan domain @mail.unpad.ac.id atau @unpad.ac.id"
+          );
+          return;
+        }
+
+        try {
+          const { signInWithEmailAndPassword, doc, getDoc } =
+            window.firebaseModules;
+
+          // Login ke Firebase Auth
+          const userCredential = await signInWithEmailAndPassword(
+            window.firebaseAuth,
+            email,
+            password
+          );
+          const user = userCredential.user;
+
+          // Cek verifikasi email
+          if (!user.emailVerified) {
+            showToast(
+              "Email belum diverifikasi!\n\nSilakan cek inbox/spam Anda dan klik link verifikasi."
+            );
+            await window.firebaseAuth.signOut();
+            return;
+          }
+
+          // Ambil data user dari Firestore
+          const userDoc = await getDoc(
+            doc(window.firebaseDb, "users", user.uid)
+          );
+
+          if (!userDoc.exists()) {
+            showToast("Data user tidak ditemukan!");
+            await window.firebaseAuth.signOut();
+            return;
+          }
+
+          const userData = userDoc.data();
+
+          // Cek apakah sudah pernah voting
+          if (userData.hasVoted) {
+            showToast(
+              "Anda sudah pernah melakukan voting sebelumnya!\n\nSetiap pemilih hanya boleh memilih 1 kali."
+            );
+            await window.firebaseAuth.signOut();
+            return;
+          }
+
+          // Simpan userId ke sessionStorage
+          sessionStorage.setItem("userId", user.uid);
+          sessionStorage.setItem("userName", userData.fullName);
+
+          // Redirect ke voting page
+          loginPage.classList.add("hidden");
+          votingPage.classList.remove("hidden");
+          document.body.classList.add("voting-active");
+          window.scrollTo(0, 0);
+
+          console.log("Login berhasil! User:", userData.fullName);
+        } catch (error) {
+          console.error("Login error:", error);
+
+          // Handle berbagai error Firebase
+          if (error.code === "auth/wrong-password") {
+            showToast("Password salah! Silakan coba lagi.");
+          } else if (error.code === "auth/user-not-found") {
+            showToast("Email tidak terdaftar! Silakan daftar terlebih dahulu.");
+          } else if (error.code === "auth/invalid-credential") {
+            showToast("Email atau password salah! Silakan periksa kembali.");
+          } else if (error.code === "auth/too-many-requests") {
+            showToast(
+              "Terlalu banyak percobaan login gagal. Silakan coba lagi nanti."
+            );
+          } else {
+            showToast("Gagal login: " + error.message);
+          }
+        }
+      });
+
+      // Auto-login check (saat page load)
+      window.addEventListener("DOMContentLoaded", async () => {
+        const { onAuthStateChanged, doc, getDoc } = window.firebaseModules;
+
+        onAuthStateChanged(window.firebaseAuth, async (user) => {
+          if (user && user.emailVerified) {
+            // User sudah login dan email verified
+            const userDoc = await getDoc(
+              doc(window.firebaseDb, "users", user.uid)
+            );
+
+            if (userDoc.exists()) {
+              const userData = userDoc.data();
+
+              // Kalau belum voting, langsung masuk ke voting page
+              if (!userData.hasVoted) {
+                sessionStorage.setItem("userId", user.uid);
+                sessionStorage.setItem("userName", userData.fullName);
+
+                homepage.classList.add("hidden");
+                registerPage.classList.add("hidden");
+                loginPage.classList.add("hidden");
+                votingPage.classList.remove("hidden");
+              }
+            }
+          }
+        });
+      });
+
       // Voting Logic
       let selectedId = null;
       const cards = document.querySelectorAll(".card");
@@ -3495,22 +3960,45 @@
           selectedId = this.getAttribute("data-id");
           voteBtn.disabled = false;
           voteBtn.innerHTML = `
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            Submit Vote
-          `;
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        Submit Vote
+      `;
         });
       });
 
       voteBtn.addEventListener("click", async function () {
-        if (!selectedId) return;
+        if (!selectedId) {
+          showToast("Silakan pilih kandidat terlebih dahulu!");
+          return;
+        }
 
         const userId = sessionStorage.getItem("userId");
         if (!userId) {
-          alert("Session tidak valid. Silakan login kembali.");
+          showToast("Session tidak valid. Silakan login kembali.");
+          // Redirect ke login
+          votingPage.classList.add("hidden");
+          loginPage.classList.remove("hidden");
           return;
         }
+
+        // Konfirmasi sebelum submit
+        const candidateName = candidates[selectedId];
+        const confirm = window.confirm(
+          `Apakah Anda yakin memilih:\n\n"${candidateName}"\n\nPilihan tidak dapat diubah setelah submit!`
+        );
+
+        if (!confirm) return;
+
+        // Disable button saat proses
+        voteBtn.disabled = true;
+        voteBtn.innerHTML = `
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" style="animation: spin 1s linear infinite;">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+      </svg>
+      Menyimpan...
+    `;
 
         try {
           const { doc, updateDoc, serverTimestamp } = window.firebaseModules;
@@ -3525,16 +4013,142 @@
           // Tampilkan success screen
           votingScreen.style.display = "none";
           successScreen.style.display = "block";
-          selectedName.textContent = candidates[selectedId];
+          selectedName.textContent = candidateName;
           window.scrollTo(0, 0);
+
+          // Clear session setelah voting
+          setTimeout(() => {
+            sessionStorage.clear();
+            window.firebaseAuth.signOut();
+          }, 3000);
         } catch (error) {
-          console.error(error);
-          alert("Gagal menyimpan vote: " + error.message);
+          console.error("Vote error:", error);
+          showToast("Gagal menyimpan vote: " + error.message);
+
+          // Re-enable button
+          voteBtn.disabled = false;
+          voteBtn.innerHTML = `
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        Submit Vote
+      `;
         }
       });
+
+      // Ganti alert password dengan modal custom
+      function showPasswordModal(password) {
+        const container = document.getElementById("toastContainer");
+        const toast = document.createElement("div");
+        toast.className = "toast success password-toast";
+
+        toast.innerHTML = `
+    <svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <div class="toast-content" style="flex: 1;">
+      <div class="toast-title">🎉 Registrasi Berhasil!</div>
+      <div class="toast-message" style="margin-bottom: 12px;">
+        Password Anda telah dibuat. <strong style="color: #ef4444;">SIMPAN dengan aman!</strong>
+      </div>
+      
+      <!-- Password Box -->
+      <div style="
+        background: var(--bg-secondary);
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        padding: 12px;
+        margin-bottom: 10px;
+      ">
+        <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600;">
+          🔑 PASSWORD ANDA
+        </div>
+        <div id="passwordText-${Date.now()}" style="
+          font-size: 18px;
+          font-weight: 700;
+          color: var(--gradient-start);
+          font-family: 'Courier New', monospace;
+          letter-spacing: 2px;
+          word-break: break-all;
+          user-select: all;
+          margin-bottom: 10px;
+        ">${password}</div>
+        
+        <!-- Copy Button -->
+        <button onclick="
+          navigator.clipboard.writeText('${password}');
+          this.innerHTML = '✓ Tersalin!';
+          this.style.background = '#10b981';
+          setTimeout(() => {
+            this.innerHTML = '📋 Salin Password';
+            this.style.background = 'linear-gradient(135deg, var(--gradient-start), var(--gradient-end))';
+          }, 2000);
+        " style="
+          background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+          color: white;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 8px;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+          width: 100%;
+          transition: all 0.2s ease;
+        ">
+          📋 Salin Password
+        </button>
+      </div>
+      
+      <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">
+        📧 Cek email Anda untuk verifikasi akun (periksa juga folder spam).
+      </div>
+    </div>
+    <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+  `;
+
+        container.appendChild(toast);
+
+        // Auto remove setelah 15 detik (lebih lama karena ada password)
+        setTimeout(() => {
+          toast.classList.add("removing");
+          setTimeout(() => toast.remove(), 300);
+        }, 15000);
+      }
+
+      // Home button on success page
+      const homeBtn = document.getElementById("homeBtn");
+      homeBtn.addEventListener("click", () => {
+        // Reset semua
+        votingPage.classList.add("hidden");
+        document.body.classList.remove("voting-active");
+        successScreen.style.display = "none";
+        votingScreen.style.display = "block";
+        homepage.classList.remove("hidden");
+
+        // Reset voting selection
+        cards.forEach((c) => c.classList.remove("selected"));
+        selectedId = null;
+        voteBtn.disabled = true;
+        voteBtn.innerHTML = `
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+    Pilih Kandidat Terlebih Dahulu
+  `;
+
+        updateNavbarVisibility("homepage");
+        window.scrollTo(0, 0);
+      });
+
+      // Add spin animation to style (optional, untuk loading spinner)
+      const style = document.createElement("style");
+      style.textContent = `
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  `;
+      document.head.appendChild(style);
     </script>
   </body>
 </html>
-
-
-
